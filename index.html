@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALBAインプラント術前診断ゲーム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .step-title {
+            border-left: 5px solid #1D4ED8;
+            padding-left: 10px;
+        }
+        .result-card {
+            background-color: #f0f9ff;
+            border-left: 5px solid #3B82F6;
+        }
+        .warning-card {
+            background-color: #fefce8;
+            border-left: 5px solid #EAB308;
+        }
+        .danger-card {
+            background-color: #fef2f2;
+            border-left: 5px solid #EF4444;
+        }
+        .form-select, .form-input {
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">ALBAインプラント術前診断ゲーム</h1>
+            <p class="mt-2 text-lg text-gray-600">プレイヤー：歯科医師</p>
+        </header>
+
+        <main id="game-container" class="space-y-8">
+            <!-- Step 1: Contraindications -->
+            <div id="step1" class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 step-title">Step 1: 全身状態の確認（問診）</h2>
+                <p class="mb-4">まず、インプラント治療の絶対的禁忌症に該当しないか確認します。</p>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="未コントロールな糖尿病（HbA1c 8.0%以上）" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">未コントロールな糖尿病（HbA1c 8.0%以上）</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="顎骨への放射線治療歴（累積照射量50Gy以上）" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">顎骨への放射線治療歴（累積照射量50Gy以上）</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="静注BP製剤（ランマーク、ゾメタ等）使用中" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">静注BP製剤（ランマーク、ゾメタ等）使用中</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="高度な免疫抑制状態・自己免疫疾患" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">高度な免疫抑制状態・自己免疫疾患</span>
+                    </label>
+                     <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="成長期の小児" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">成長期の小児</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="contra" value="妊娠中の患者" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">妊娠中の患者</span>
+                    </label>
+                </div>
+                <button onclick="checkContraindications()" class="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">問診を完了し次へ</button>
+            </div>
+
+            <!-- Step 2: Clinical Data Input -->
+            <div id="step2" class="bg-white p-6 rounded-lg shadow-lg hidden">
+                <h2 class="text-2xl font-bold mb-4 step-title">Step 2: 局所状態の評価（CT読影）</h2>
+                <p class="mb-6">CT画像から得られた情報を入力してください。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="jaw" class="block text-sm font-medium text-gray-700">1. 顎堤</label>
+                        <select id="jaw" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                            <option value="maxilla">上顎</option>
+                            <option value="mandible">下顎</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700">2. 埋入部位</label>
+                        <select id="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                            <option value="anterior">前歯部</option>
+                            <option value="premolar">小臼歯部</option>
+                            <option value="molar">大臼歯部</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="vertical_bone" class="block text-sm font-medium text-gray-700">3. 垂直的骨量 (mm)</label>
+                        <p class="text-xs text-gray-500 mb-1">上顎: 上顎洞底まで / 下顎: 下顎管まで</p>
+                        <select id="vertical_bone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                            <option value="<4">&lt; 4 mm</option>
+                            <option value="4-6">4 - 6 mm</option>
+                            <option value="7-9">7 - 9 mm</option>
+                            <option value="10-11">10 - 11 mm</option>
+                            <option value=">=12">&gt;= 12 mm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="mesiodistal_width" class="block text-sm font-medium text-gray-700">4. 近遠心的骨幅 (mm)</label>
+                         <p class="text-xs text-gray-500 mb-1">隣在歯とのクリアランス</p>
+                        <select id="mesiodistal_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                            <option value="<5.5">&lt; 5.5 mm</option>
+                            <option value="5.5-6.9">5.5 - 6.9 mm</option>
+                            <option value=">=7.0">&gt;= 7.0 mm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="buccolingual_width" class="block text-sm font-medium text-gray-700">5. 頬舌的骨幅 (mm)</label>
+                        <p class="text-xs text-gray-500 mb-1">埋入予定部位の歯槽頂幅</p>
+                        <select id="buccolingual_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                             <option value="<5.3">&lt; 5.3 mm</option>
+                             <option value="5.3-6.0">5.3 - 6.0 mm</option>
+                             <option value="6.1-6.8">6.1 - 6.8 mm</option>
+                             <option value=">=6.8">&gt;= 6.8 mm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bone_quality" class="block text-sm font-medium text-gray-700">6. 骨質分類</label>
+                         <p class="text-xs text-gray-500 mb-1">Misch分類に準拠</p>
+                        <select id="bone_quality" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
+                            <option value="D1">D1 (緻密な皮質骨)</option>
+                            <option value="D2">D2 (厚い皮質骨と緻密な海綿骨)</option>
+                            <option value="D3">D3 (薄い皮質骨と緻密な海綿骨)</option>
+                            <option value="D4">D4 (薄い皮質骨と粗な海綿骨)</option>
+                            <option value="D5">D5 (線維性の軟らかい骨)</option>
+                        </select>
+                    </div>
+                </div>
+                 <button onclick="generateDiagnosis()" class="mt-8 w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">診断・治療計画を立案</button>
+            </div>
+
+            <!-- Step 3: Diagnosis Result -->
+            <div id="step3" class="hidden">
+                <h2 class="text-2xl font-bold mb-4 step-title">診断結果・治療計画サマリー</h2>
+                <div id="diagnosis-result" class="space-y-4"></div>
+                <button onclick="restartGame()" class="mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-300">新しい症例で再診断</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ゲームの状態を管理するオブジェクト
+        let gameState = {};
+
+        function checkContraindications() {
+            const checkboxes = document.querySelectorAll('input[name="contra"]:checked');
+            if (checkboxes.length > 0) {
+                const reasons = Array.from(checkboxes).map(cb => cb.value).join('、');
+                alert(`絶対的禁忌症（${reasons}）に該当するため、インプラント治療は推奨されません。`);
+            } else {
+                document.getElementById('step1').classList.add('hidden');
+                document.getElementById('step2').classList.remove('hidden');
+            }
+        }
+
+        function generateDiagnosis() {
+            // ユーザーの選択を取得
+            const jaw = document.getElementById('jaw').value;
+            const location = document.getElementById('location').value;
+            const verticalBone = document.getElementById('vertical_bone').value;
+            const mesiodistalWidth = document.getElementById('mesiodistal_width').value;
+            const buccolingualWidth = document.getElementById('buccolingual_width').value;
+            const boneQuality = document.getElementById('bone_quality').value;
+            
+            gameState = { jaw, location, verticalBone, mesiodistalWidth, buccolingualWidth, boneQuality };
+
+            // 診断ロジック
+            let diagnosis = {
+                warnings: [],
+                dangers: [],
+                procedures: [],
+                straumann: { recommendation: [], notes: [] },
+                aqb: { recommendation: [], notes: [] },
+                drilling: ""
+            };
+
+            // 垂直的骨量の評価と術式選択
+            const vBoneMap = { '<4': 3, '4-6': 5, '7-9': 8, '10-11': 10, '>=12': 12 };
+            const vBoneNum = vBoneMap[verticalBone];
+
+            if (jaw === 'maxilla' && location === 'molar') {
+                if (vBoneNum < 4) {
+                    diagnosis.procedures.push('サイナスリフト（ラテラルアプローチ）を推奨');
+                } else if (vBoneNum >= 4 && vBoneNum < 7) {
+                    diagnosis.procedures.push('サイナスリフト（ラテラル or クレスタル）を検討');
+                } else if (vBoneNum >= 7 && vBoneNum < 10) {
+                    diagnosis.procedures.push('ソケットリフトを検討');
+                }
+            }
+
+            // 下顎の安全域チェック
+            if (jaw === 'mandible') {
+                if (vBoneNum < 6) {
+                    diagnosis.dangers.push('下顎管までの距離が6.0mm未満です。神経損傷のリスクが極めて高いため、インプラント治療は原則禁忌です。');
+                } else if (vBoneNum >= 6 && vBoneNum < 8) { // 6-7mmに安全域2mmを考慮
+                    diagnosis.warnings.push('下顎管までの距離が危険域です（< 8mm）。GBRや傾斜埋入を検討し、経験豊富な術者による執刀または相談を強く推奨します。');
+                }
+            }
+            
+            // 水平的骨幅の評価
+            const buccolingualMap = {'<5.3': 5.2, '5.3-6.0': 5.6, '6.1-6.8': 6.4, '>=6.8': 7.0};
+            const buccolingualNum = buccolingualMap[buccolingualWidth];
+            
+            const mesiodistalMap = {'<5.5': 5.4, '5.5-6.9': 6.2, '>=7.0': 7.5};
+            const mesiodistalNum = mesiodistalMap[mesiodistalWidth];
+
+            // GBRの検討
+            if (buccolingualNum < 5.3) {
+                 diagnosis.procedures.push('頬舌的骨幅が不足しているためGBR（骨造成）の併用を強く推奨します。');
+            }
+
+            // インプラント選択ロジック
+            let implantLength = Math.min(12, vBoneNum - 2); // 安全域2mmを考慮
+            if (jaw === 'maxilla' && location === 'molar' && vBoneNum < 10) implantLength = 8; // サイナスリフト症例では短めを想定
+            if (implantLength < 6) implantLength = 6; // 最小長
+
+            // ストローマン
+            if (buccolingualNum >= 6.8 && mesiodistalNum >= 7.0) {
+                 diagnosis.straumann.recommendation.push(`BLT RC ø4.8 x ${Math.min(12, implantLength)}mm`);
+            } else if (buccolingualNum >= 6.1 && mesiodistalNum >= 7.0) {
+                 diagnosis.straumann.recommendation.push(`BLT RC ø4.1 x ${implantLength}mm`);
+            } else if (buccolingualNum >= 5.3 && mesiodistalNum >= 5.5) {
+                diagnosis.straumann.recommendation.push(`BLT NC ø3.3 x ${implantLength}mm`);
+            } else {
+                diagnosis.straumann.notes.push("骨幅に適したストローマンインプラントの選択が困難です。GBRを必須とします。");
+            }
+
+            // AQB
+            const aqbLengthMap = {6:'6', 8:'S', 10:'M', 12:'L', 14:'Y'};
+            const aqbLengthCode = aqbLengthMap[implantLength > 12 ? 12 : (implantLength > 10 ? 12 : (implantLength > 8 ? 10 : (implantLength > 6 ? 8 : 6)) )];
+
+            if (buccolingualNum >= 7.0) {
+                diagnosis.aqb.recommendation.push(`T5M${aqbLengthCode} (ø5.0)`);
+            } else if (buccolingualNum >= 6.0) {
+                diagnosis.aqb.recommendation.push(`T4M${aqbLengthCode} (ø4.0)`);
+            } else if (buccolingualNum >= 5.3) {
+                diagnosis.aqb.recommendation.push(`T3M${aqbLengthCode} (ø3.0)`);
+            } else {
+                 diagnosis.aqb.notes.push("骨幅に適したAQBインプラントの選択が困難です。GBRを必須とします。");
+            }
+             if (boneQuality === 'D4' || boneQuality === 'D5') {
+                diagnosis.straumann.notes.push("軟らかい骨質のため、可能であれば太めのインプラント（BLTなど）の選択を推奨します。");
+                diagnosis.aqb.notes.push("軟らかい骨質のため、可能であれば太めのインプラントの選択を推奨します。");
+            }
+            
+            // ドリリングシーケンス
+            switch(boneQuality) {
+                case 'D1':
+                    diagnosis.drilling = "【D1: 硬い骨】低速回転（700rpm以下）、十分な注水下で慎重にドリリング。骨のオーバーヒート（骨壊死）に最大限注意。最終ドリル径はインプラント径より0.1-0.3mm大きく形成し、埋入トルクを抑制。";
+                    break;
+                case 'D2':
+                    diagnosis.drilling = "【D2: やや硬い骨】通常回転速度（800-1200rpm）でドリリング。最終ドリル径はインプラント径と同等か、わずかに（~0.2mm）小さく設定し、良好な初期固定を目指す。";
+                    break;
+                case 'D3':
+                    diagnosis.drilling = "【D3: 一般的な骨】標準的なドリルシーケンス（基本800rpm）。最終ドリル径はインプラント径より0.5mm程度小さくし、圧入効果による初期固定の強化を図る。";
+                    break;
+                case 'D4':
+                    diagnosis.drilling = "【D4: やや軟らかい骨】最小限のドリリング（パイロット～セカンドドリルまで）に留める。最終ドリル径をインプラント径より1.0mm程度小さくし、圧入効果を最大化する。";
+                    break;
+                case 'D5':
+                    diagnosis.drilling = "【D5: 非常に軟らかい骨】最小限のドリル（パイロット、ファーストのみ）で対応。初期固定が得られない場合はGBR併用を前提とする。短めで太いインプラントが有利。";
+                    break;
+            }
+
+            displayDiagnosis(diagnosis);
+        }
+
+        function displayDiagnosis(diagnosis) {
+            const resultContainer = document.getElementById('diagnosis-result');
+            resultContainer.innerHTML = ''; // Clear previous results
+
+            // Display dangers
+            if (diagnosis.dangers.length > 0) {
+                const dangerDiv = document.createElement('div');
+                dangerDiv.className = 'p-4 rounded-md danger-card';
+                dangerDiv.innerHTML = `<h3 class="font-bold text-red-800">【禁忌・治療不可】</h3><p class="text-red-700">${diagnosis.dangers.join('<br>')}</p>`;
+                resultContainer.appendChild(dangerDiv);
+                // If contraindicated, stop here
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step3').classList.remove('hidden');
+                return;
+            }
+
+            // Display warnings
+            if (diagnosis.warnings.length > 0) {
+                const warningDiv = document.createElement('div');
+                warningDiv.className = 'p-4 rounded-md warning-card';
+                warningDiv.innerHTML = `<h3 class="font-bold text-yellow-800">【警告・要注意】</h3><p class="text-yellow-700">${diagnosis.warnings.join('<br>')}</p>`;
+                resultContainer.appendChild(warningDiv);
+            }
+
+            // Display recommended procedures
+            if (diagnosis.procedures.length > 0) {
+                const procDiv = document.createElement('div');
+                procDiv.className = 'p-4 rounded-md result-card';
+                procDiv.innerHTML = `<h3 class="font-bold text-blue-800">推奨される追加術式</h3><ul class="list-disc list-inside text-blue-700">${diagnosis.procedures.map(p => `<li>${p}</li>`).join('')}</ul>`;
+                resultContainer.appendChild(procDiv);
+            }
+            
+            // Display implant recommendations
+            const implantDiv = document.createElement('div');
+            implantDiv.className = 'p-4 rounded-md result-card';
+            let implantHTML = `<h3 class="font-bold text-blue-800">推奨インプラント</h3>`;
+            if(diagnosis.straumann.recommendation.length > 0) {
+                implantHTML += `<p><b>ストローマン:</b> ${diagnosis.straumann.recommendation.join(', ')}</p>`;
+            }
+            if(diagnosis.straumann.notes.length > 0) {
+                implantHTML += `<p class="text-sm text-blue-600">└ ${diagnosis.straumann.notes.join('<br>')}</p>`;
+            }
+             if(diagnosis.aqb.recommendation.length > 0) {
+                implantHTML += `<p class="mt-2"><b>AQB:</b> ${diagnosis.aqb.recommendation.join(', ')}</p>`;
+            }
+            if(diagnosis.aqb.notes.length > 0) {
+                implantHTML += `<p class="text-sm text-blue-600">└ ${diagnosis.aqb.notes.join('<br>')}</p>`;
+            }
+            implantDiv.innerHTML = implantHTML;
+            resultContainer.appendChild(implantDiv);
+
+            // Display drilling protocol
+            const drillDiv = document.createElement('div');
+            drillDiv.className = 'p-4 rounded-md result-card';
+            drillDiv.innerHTML = `<h3 class="font-bold text-blue-800">ドリリングプロトコル</h3><p class="text-blue-700">${diagnosis.drilling}</p>`;
+            resultContainer.appendChild(drillDiv);
+
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+        }
+
+        function restartGame() {
+            gameState = {};
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+            // Reset form fields
+            document.querySelectorAll('input[name="contra"]').forEach(cb => cb.checked = false);
+            document.getElementById('step2').querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+        }
+    </script>
+</body>
+</html>
