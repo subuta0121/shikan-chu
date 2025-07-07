@@ -67,7 +67,7 @@
             <!-- Step 1 -->
             <div id="step1" class="video-bg-container">
                 <video autoplay loop muted playsinline class="video-bg">
-                    <source src="background_main.mp4" type="video/mp4">
+                    <source src="./background_main.mp4" type="video/mp4">
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">Step 1: 全身状態の確認（問診）</h2>
@@ -81,7 +81,7 @@
                         <label class="flex items-center"><input type="checkbox" name="contra" value="妊娠中の患者" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">妊娠中の患者</span></label>
                     </div>
                     <button onclick="checkContraindications()" class="relative mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
-                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
                         <span class="button-text">問診を完了し次へ</span>
                     </button>
                 </div>
@@ -90,7 +90,7 @@
             <!-- Step 2 -->
             <div id="step2" class="video-bg-container hidden">
                  <video autoplay loop muted playsinline class="video-bg">
-                    <source src="background_main.mp4" type="video/mp4">
+                    <source src="./background_main.mp4" type="video/mp4">
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">Step 2: 局所状態の評価（CT読影）</h2>
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                      <button onclick="generateDiagnosis()" class="relative mt-8 w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 overflow-hidden transition duration-300">
-                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
                         <span class="button-text">診断・治療計画を立案</span>
                      </button>
                 </div>
@@ -160,13 +160,13 @@
             <!-- Step 3 -->
             <div id="step3" class="video-bg-container hidden">
                 <video autoplay loop muted playsinline class="video-bg">
-                    <source src="background_result.mp4" type="video/mp4">
+                    <source src="./background_result.mp4" type="video/mp4">
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">診断結果・治療計画サマリー</h2>
                     <div id="diagnosis-result" class="space-y-4"></div>
                     <button onclick="restartGame()" class="relative mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 overflow-hidden transition duration-300">
-                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
                         <span class="button-text">新しい症例で再診断</span>
                     </button>
                 </div>
