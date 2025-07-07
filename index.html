@@ -16,20 +16,42 @@
             border-left: 5px solid #1D4ED8;
             padding-left: 10px;
         }
-        .result-card {
-            background-color: #f0f9ff;
-            border-left: 5px solid #3B82F6;
+        .video-bg-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
         }
-        .warning-card {
-            background-color: #fefce8;
-            border-left: 5px solid #EAB308;
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
-        .danger-card {
-            background-color: #fef2f2;
-            border-left: 5px solid #EF4444;
+        .content-overlay {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(31, 41, 55, 0.7); /* 半透明の濃いグレー */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            backdrop-filter: blur(4px); /* 背景をぼかす */
         }
-        .form-select, .form-input {
-            transition: all 0.3s;
+        .button-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        .button-text {
+            position: relative;
+            z-index: 10;
         }
     </style>
 </head>
@@ -37,121 +59,125 @@
 
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-red-600">ALBAインプラント術前診断</h1>
-            <p class="mt-2 text-lg text-gray-600">プレイヤー：歯科医師</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-red-600 leading-tight">ALBAインプラント<br>術前診断</h1>
+            <p class="mt-4 text-lg text-gray-600">プレイヤー：歯科医師</p>
         </header>
 
         <main id="game-container" class="space-y-8">
-            <div id="step1" class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 step-title">Step 1: 全身状態の確認（問診）</h2>
-                <p class="mb-4">まず、インプラント治療の絶対的禁忌症に該当しないか確認します。</p>
-                <div class="space-y-2">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="未コントロールな糖尿病（HbA1c 8.0%以上）" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">未コントロールな糖尿病（HbA1c 8.0%以上）</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="顎骨への放射線治療歴（累積照射量50Gy以上）" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">顎骨への放射線治療歴（累積照射量50Gy以上）</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="静注BP製剤（ランマーク、ゾメタ等）使用中" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">静注BP製剤（ランマーク、ゾメタ等）使用中</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="高度な免疫抑制状態・自己免疫疾患" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">高度な免疫抑制状態・自己免疫疾患</span>
-                    </label>
-                     <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="成長期の小児" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">成長期の小児</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="contra" value="妊娠中の患者" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2">妊娠中の患者</span>
-                    </label>
+            <!-- Step 1 -->
+            <div id="step1" class="video-bg-container">
+                <video autoplay loop muted playsinline class="video-bg">
+                    <source src="background_main.mp4" type="video/mp4">
+                </video>
+                <div class="content-overlay text-white">
+                    <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">Step 1: 全身状態の確認（問診）</h2>
+                    <p class="mb-4 text-gray-200">まず、インプラント治療の絶対的禁忌症に該当しないか確認します。</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="未コントロールな糖尿病（HbA1c 8.0%以上）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">未コントロールな糖尿病（HbA1c 8.0%以上）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="顎骨への放射線治療歴（累積照射量50Gy以上）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">顎骨への放射線治療歴（累積照射量50Gy以上）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="静注BP製剤（ランマーク、ゾメタ等）使用中" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">静注BP製剤（ランマーク、ゾメタ等）使用中</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="高度な免疫抑制状態・自己免疫疾患" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">高度な免疫抑制状態・自己免疫疾患</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="成長期の小児" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">成長期の小児</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="妊娠中の患者" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">妊娠中の患者</span></label>
+                    </div>
+                    <button onclick="checkContraindications()" class="relative mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <span class="button-text">問診を完了し次へ</span>
+                    </button>
                 </div>
-                <button onclick="checkContraindications()" class="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">問診を完了し次へ</button>
             </div>
 
-            <div id="step2" class="bg-white p-6 rounded-lg shadow-lg hidden">
-                <h2 class="text-2xl font-bold mb-4 step-title">Step 2: 局所状態の評価（CT読影）</h2>
-                <p class="mb-6">CT画像から得られた情報を入力してください。</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="jaw" class="block text-sm font-medium text-gray-700">1. 顎堤</label>
-                        <select id="jaw" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                            <option value="maxilla">上顎</option>
-                            <option value="mandible">下顎</option>
-                        </select>
+            <!-- Step 2 -->
+            <div id="step2" class="video-bg-container hidden">
+                 <video autoplay loop muted playsinline class="video-bg">
+                    <source src="background_main.mp4" type="video/mp4">
+                </video>
+                <div class="content-overlay text-white">
+                    <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">Step 2: 局所状態の評価（CT読影）</h2>
+                    <p class="mb-6 text-gray-200">CT画像から得られた情報を入力してください。</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="jaw" class="block text-sm font-medium">1. 顎堤</label>
+                            <select id="jaw" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                <option value="maxilla">上顎</option>
+                                <option value="mandible">下顎</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="location" class="block text-sm font-medium">2. 埋入部位</label>
+                            <select id="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                <option value="anterior">前歯部</option>
+                                <option value="premolar">小臼歯部</option>
+                                <option value="molar">大臼歯部</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="vertical_bone" class="block text-sm font-medium">3. 垂直的骨量 (mm)</label>
+                            <select id="vertical_bone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                <option value="<4">&lt; 4 mm</option>
+                                <option value="4-6">4 - 6 mm</option>
+                                <option value="7-9">7 - 9 mm</option>
+                                <option value="10-11">10 - 11 mm</option>
+                                <option value=">=12">&gt;= 12 mm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="mesiodistal_width" class="block text-sm font-medium">4. 近遠心的骨幅 (mm)</label>
+                            <select id="mesiodistal_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                <option value="<6.3">&lt; 6.3 mm</option>
+                                <option value="6.3-7.0">6.3 - 7.0 mm</option>
+                                <option value="7.1-7.9">7.1 - 7.9 mm</option>
+                                <option value=">=8.0">&gt;= 8.0 mm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="buccolingual_width" class="block text-sm font-medium">5. 頬舌的骨幅 (mm)</label>
+                            <select id="buccolingual_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                 <option value="<5.3">&lt; 5.3 mm</option>
+                                 <option value="5.3-6.0">5.3 - 6.0 mm</option>
+                                 <option value="6.1-6.8">6.1 - 6.8 mm</option>
+                                 <option value=">=6.8">&gt;= 6.8 mm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="bone_quality" class="block text-sm font-medium">6. 骨質分類</label>
+                            <select id="bone_quality" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
+                                <option value="D1">D1 (緻密な皮質骨)</option>
+                                <option value="D2">D2 (厚い皮質骨と緻密な海綿骨)</option>
+                                <option value="D3">D3 (薄い皮質骨と緻密な海綿骨)</option>
+                                <option value="D4">D4 (薄い皮質骨と粗な海綿骨)</option>
+                                <option value="D5">D5 (線維性の軟らかい骨)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label for="location" class="block text-sm font-medium text-gray-700">2. 埋入部位</label>
-                        <select id="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                            <option value="anterior">前歯部</option>
-                            <option value="premolar">小臼歯部</option>
-                            <option value="molar">大臼歯部</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="vertical_bone" class="block text-sm font-medium text-gray-700">3. 垂直的骨量 (mm)</label>
-                        <p class="text-xs text-gray-500 mb-1">上顎: 上顎洞底まで / 下顎: 下顎管まで</p>
-                        <select id="vertical_bone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                            <option value="<4">&lt; 4 mm</option>
-                            <option value="4-6">4 - 6 mm</option>
-                            <option value="7-9">7 - 9 mm</option>
-                            <option value="10-11">10 - 11 mm</option>
-                            <option value=">=12">&gt;= 12 mm</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="mesiodistal_width" class="block text-sm font-medium text-gray-700">4. 近遠心的骨幅 (mm)</label>
-                         <p class="text-xs text-gray-500 mb-1">隣在歯とのクリアランス</p>
-                        <select id="mesiodistal_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                            <option value="<5.5">&lt; 5.5 mm</option>
-                            <option value="5.5-6.9">5.5 - 6.9 mm</option>
-                            <option value=">=7.0">&gt;= 7.0 mm</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="buccolingual_width" class="block text-sm font-medium text-gray-700">5. 頬舌的骨幅 (mm)</label>
-                        <p class="text-xs text-gray-500 mb-1">埋入予定部位の歯槽頂幅</p>
-                        <select id="buccolingual_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                             <option value="<5.3">&lt; 5.3 mm</option>
-                             <option value="5.3-6.0">5.3 - 6.0 mm</option>
-                             <option value="6.1-6.8">6.1 - 6.8 mm</option>
-                             <option value=">=6.8">&gt;= 6.8 mm</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="bone_quality" class="block text-sm font-medium text-gray-700">6. 骨質分類</label>
-                         <p class="text-xs text-gray-500 mb-1">Misch分類に準拠</p>
-                        <select id="bone_quality" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md form-select">
-                            <option value="D1">D1 (緻密な皮質骨)</option>
-                            <option value="D2">D2 (厚い皮質骨と緻密な海綿骨)</option>
-                            <option value="D3">D3 (薄い皮質骨と緻密な海綿骨)</option>
-                            <option value="D4">D4 (薄い皮質骨と粗な海綿骨)</option>
-                            <option value="D5">D5 (線維性の軟らかい骨)</option>
-                        </select>
-                    </div>
+                     <button onclick="generateDiagnosis()" class="relative mt-8 w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 overflow-hidden transition duration-300">
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <span class="button-text">診断・治療計画を立案</span>
+                     </button>
                 </div>
-                 <button onclick="generateDiagnosis()" class="mt-8 w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">診断・治療計画を立案</button>
             </div>
 
-            <div id="step3" class="hidden">
-                <h2 class="text-2xl font-bold mb-4 step-title">診断結果・治療計画サマリー</h2>
-                <div id="diagnosis-result" class="space-y-4"></div>
-                <button onclick="restartGame()" class="mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-300">新しい症例で再診断</button>
+            <!-- Step 3 -->
+            <div id="step3" class="video-bg-container hidden">
+                <video autoplay loop muted playsinline class="video-bg">
+                    <source src="background_result.mp4" type="video/mp4">
+                </video>
+                <div class="content-overlay text-white">
+                    <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">診断結果・治療計画サマリー</h2>
+                    <div id="diagnosis-result" class="space-y-4"></div>
+                    <button onclick="restartGame()" class="relative mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 overflow-hidden transition duration-300">
+                        <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="background_button.mp4" type="video/mp4"></video>
+                        <span class="button-text">新しい症例で再診断</span>
+                    </button>
+                </div>
             </div>
         </main>
     </div>
 
     <script>
-        // --- データベース ---
         const STRAUMANN_LENGTHS = [16, 14, 12, 10, 8, 6];
         const AQB_LENGTHS = [14, 12, 10, 8, 6];
         const AQB_LENGTH_CODES = { 14: 'Y', 12: 'L', 10: 'M', 8: 'S', 6: '6' };
-
         let gameState = {};
 
         function checkContraindications() {
@@ -174,6 +200,27 @@
             return null;
         }
 
+        function getDiameterClass(mesiodistalValue, buccolingualNum) {
+            let classByMesio, classByBucco;
+
+            if (mesiodistalValue === '>=8.0') classByMesio = 'wide';
+            else if (mesiodistalValue === '7.1-7.9') classByMesio = 'regular';
+            else if (mesiodistalValue === '6.3-7.0') classByMesio = 'narrow';
+            else classByMesio = 'none';
+
+            if (buccolingualNum >= 6.8) classByBucco = 'wide';
+            else if (buccolingualNum >= 6.1) classByBucco = 'regular';
+            else if (buccolingualNum >= 5.3) classByBucco = 'narrow';
+            else classByBucco = 'none';
+            
+            const hierarchy = ['none', 'narrow', 'regular', 'wide'];
+            const indexMesio = hierarchy.indexOf(classByMesio);
+            const indexBucco = hierarchy.indexOf(classByBucco);
+
+            return hierarchy[Math.min(indexMesio, indexBucco)];
+        }
+
+
         function generateDiagnosis() {
             const jaw = document.getElementById('jaw').value;
             const location = document.getElementById('location').value;
@@ -193,8 +240,6 @@
             const vBoneNum = vBoneMap[verticalBoneValue];
             const buccolingualMap = {'<5.3': 5.2, '5.3-6.0': 5.6, '6.1-6.8': 6.4, '>=6.8': 7.0};
             const buccolingualNum = buccolingualMap[buccolingualWidthValue];
-            const mesiodistalMap = {'<5.5': 5.4, '5.5-6.9': 6.2, '>=7.0': 7.5};
-            const mesiodistalNum = mesiodistalMap[mesiodistalWidthValue];
 
             let isAugmentationCase = false;
             if (jaw === 'maxilla' && (location === 'molar' || location === 'premolar') ) {
@@ -230,31 +275,34 @@
 
             if (buccolingualWidthValue === '<5.3' &&
                 verticalBoneValue === '>=12' &&
-                mesiodistalWidthValue === '>=7.0' &&
+                mesiodistalWidthValue === '>=8.0' &&
                 (boneQuality === 'D3' || boneQuality === 'D4' || boneQuality === 'D5')) {
-                diagnosis.procedures.push('スプリットクレスト法を柴田と相談');
+                diagnosis.procedures.push('スプリットクレスト法を院長or柴田と相談');
             }
 
-            let recommendedDiameterClass = null;
-
-            if (buccolingualNum >= 6.8 && mesiodistalNum >= 7.0) {
-                recommendedDiameterClass = 'wide';
-            } else if (buccolingualNum >= 6.1 && mesiodistalNum >= 7.0) {
-                recommendedDiameterClass = 'regular';
-            } else if (buccolingualNum >= 5.3 && mesiodistalNum >= 5.5) {
-                recommendedDiameterClass = 'narrow';
-            }
-
+            const recommendedDiameterClass = getDiameterClass(mesiodistalWidthValue, buccolingualNum);
+            
             const chosenStraumannLength = getBestFitLength(STRAUMANN_LENGTHS, targetLength);
             const chosenAqbLength = getBestFitLength(AQB_LENGTHS, targetLength);
 
             if (chosenStraumannLength) {
+                let recommendationText = '';
+                const isMolarOrPremolar = (location === 'premolar' || location === 'molar');
+
                 switch (recommendedDiameterClass) {
                     case 'wide':
-                        diagnosis.straumann.recommendation.push(`BLT RC ø4.8 × ${chosenStraumannLength}mm`);
+                        recommendationText = `BLT RC ø4.8 × ${chosenStraumannLength}mm`;
+                        if (isMolarOrPremolar) {
+                            recommendationText += ` または RN ø4.8 × ${chosenStraumannLength}mm または WN ø4.8 × ${chosenStraumannLength}mm`;
+                        }
+                        diagnosis.straumann.recommendation.push(recommendationText);
                         break;
                     case 'regular':
-                        diagnosis.straumann.recommendation.push(`BLT RC ø4.1 × ${chosenStraumannLength}mm`);
+                        recommendationText = `BLT RC ø4.1 × ${chosenStraumannLength}mm`;
+                        if (isMolarOrPremolar) {
+                            recommendationText += ` または RN ø4.1 × ${chosenStraumannLength}mm`;
+                        }
+                        diagnosis.straumann.recommendation.push(recommendationText);
                         break;
                     case 'narrow':
                         diagnosis.straumann.recommendation.push(`BLT NC ø3.3 × ${chosenStraumannLength}mm`);
@@ -292,7 +340,9 @@
                     diagnosis.aqb.recommendation.push(`径: ${aqbDiameterCode} (ø${aqbDiameterValue}mm), 被覆部長: ${chosenAqbLength}mm (例: ${examplePartNumber})`);
                     diagnosis.aqb.notes.push(`支台部の高さは、軟組織の厚みや対合関係を考慮し選択してください。`);
                 } else {
-                    diagnosis.aqb.notes.push("骨幅に適したAQBインプラントの選択が困難です。GBRを必須とします。");
+                    if (recommendedDiameterClass !== 'none') {
+                       diagnosis.aqb.notes.push("骨幅に適したAQBインプラントの選択が困難です。GBRを必須とします。");
+                    }
                 }
             } else {
                  if (diagnosis.dangers.length === 0) {
@@ -317,8 +367,8 @@
 
             if (diagnosis.dangers.length > 0) {
                 const dangerDiv = document.createElement('div');
-                dangerDiv.className = 'p-4 rounded-md danger-card';
-                dangerDiv.innerHTML = `<h3 class="font-bold text-red-800">【禁忌・治療困難】</h3><p class="text-red-700">${diagnosis.dangers.join('<br>')}</p>`;
+                dangerDiv.className = 'p-4 rounded-md bg-red-900 bg-opacity-80 backdrop-blur-sm';
+                dangerDiv.innerHTML = `<h3 class="font-bold text-red-200">【禁忌・治療困難】</h3><p class="text-red-200 mt-2">${diagnosis.dangers.join('<br>')}</p>`;
                 resultContainer.appendChild(dangerDiv);
                 document.getElementById('step2').classList.add('hidden');
                 document.getElementById('step3').classList.remove('hidden');
@@ -327,32 +377,32 @@
 
             if (diagnosis.warnings.length > 0) {
                 const warningDiv = document.createElement('div');
-                warningDiv.className = 'p-4 rounded-md warning-card';
-                warningDiv.innerHTML = `<h3 class="font-bold text-yellow-800">【警告・要注意】</h3><p class="text-yellow-700">${diagnosis.warnings.join('<br>')}</p>`;
+                warningDiv.className = 'p-4 rounded-md bg-yellow-900 bg-opacity-80 backdrop-blur-sm';
+                warningDiv.innerHTML = `<h3 class="font-bold text-yellow-200">【警告・要注意】</h3><p class="text-yellow-200 mt-2">${diagnosis.warnings.join('<br>')}</p>`;
                 resultContainer.appendChild(warningDiv);
             }
 
             if (diagnosis.procedures.length > 0) {
                 const procDiv = document.createElement('div');
-                procDiv.className = 'p-4 rounded-md result-card';
-                procDiv.innerHTML = `<h3 class="font-bold text-blue-800">推奨される追加術式</h3><ul class="list-disc list-inside text-blue-700">${diagnosis.procedures.map(p => `<li>${p}</li>`).join('')}</ul>`;
+                procDiv.className = 'p-4 rounded-md bg-blue-900 bg-opacity-70 backdrop-blur-sm';
+                procDiv.innerHTML = `<h3 class="font-bold text-blue-200">推奨される追加術式</h3><ul class="list-disc list-inside text-blue-200 mt-2">${diagnosis.procedures.map(p => `<li>${p}</li>`).join('')}</ul>`;
                 resultContainer.appendChild(procDiv);
             }
             
             const implantDiv = document.createElement('div');
-            implantDiv.className = 'p-4 rounded-md result-card';
-            let implantHTML = `<h3 class="font-bold text-blue-800">推奨インプラント</h3>`;
+            implantDiv.className = 'p-4 rounded-md bg-gray-800 bg-opacity-70 backdrop-blur-sm';
+            let implantHTML = `<h3 class="font-bold text-gray-200">推奨インプラント</h3>`;
             if (diagnosis.notes) {
-                implantHTML += `<p class="text-sm text-blue-600">${diagnosis.notes}</p>`;
+                implantHTML += `<p class="text-sm text-gray-300">${diagnosis.notes}</p>`;
             }
-            implantHTML += `<div class="mt-2"><p class="font-semibold">ストローマン:</p><p class="ml-4">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="ml-4 text-sm text-blue-600">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div>`;
-            implantHTML += `<div class="mt-4"><p class="font-semibold">AQB:</p><p class="ml-4">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="ml-4 text-sm text-blue-600">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div>`;
+            implantHTML += `<div class="mt-2"><p class="font-semibold text-gray-300">ストローマン:</p><p class="ml-4 text-gray-200">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div>`;
+            implantHTML += `<div class="mt-4"><p class="font-semibold text-gray-300">AQB:</p><p class="ml-4 text-gray-200">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div>`;
             implantDiv.innerHTML = implantHTML;
             resultContainer.appendChild(implantDiv);
 
             const drillDiv = document.createElement('div');
-            drillDiv.className = 'p-4 rounded-md result-card';
-            drillDiv.innerHTML = `<h3 class="font-bold text-blue-800">ドリリングプロトコル</h3><p class="text-blue-700">${diagnosis.drilling}</p>`;
+            drillDiv.className = 'p-4 rounded-md bg-gray-800 bg-opacity-70 backdrop-blur-sm';
+            drillDiv.innerHTML = `<h3 class="font-bold text-gray-200">ドリリングプロトコル</h3><p class="text-gray-200 mt-2">${diagnosis.drilling}</p>`;
             resultContainer.appendChild(drillDiv);
 
             document.getElementById('step2').classList.add('hidden');
