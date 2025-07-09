@@ -74,9 +74,11 @@
         .video-overlay video {
             max-height: 80vh;
         }
-        .video-overlay button {
+        #close-button {
             position: absolute;
-            bottom: 50px;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5rem;
         }
         header {
             position: relative;
@@ -216,11 +218,8 @@
 
             <!-- Video Overlay -->
             <div id="video-overlay" class="video-overlay hidden">
+                <button id="close-button" onclick="closeVideo()" class="text-white hidden">✖︎</button>
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
-                <button id="back-button" onclick="closeVideo()" class="relative bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 overflow-hidden transition duration-300 hidden">
-                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
-                    <span class="button-text">戻る</span>
-                </button>
             </div>
 
             <!-- Step 3 -->
@@ -421,7 +420,7 @@
                 case 'D2': diagnosis.drilling = "【D2: やや硬い骨】通常回転速度（800-1200rpm）でドリリング。最終ドリル径はインプラント径と同等か、わずかに（~0.2mm）小さく設定し、良好な初期固定を目指す。"; break;
                 case 'D3': diagnosis.drilling = "【D3: 一般的な骨】標準的なドリルシーケンス（基本800rpm）。最終ドリル径はインプラント径より0.5mm程度小さくし、圧入効果による初期固定の強化を図る。"; break;
                 case 'D4': diagnosis.drilling = "【D4: やや軟らかい骨】最小限のドリリング（パイロット～セカンドドリルまで）に留める。最終ドリル径をインプラント径より1.0mm程度小さくし、圧入効果を最大化する。オステオトームの使用も検討。"; break;
-                case 'D5': diagnosis.drilling = "【D5: 非常に軟らかい骨】最小限のドリル（パイロット、ファーストのみ）で対応。初期固定が得られない場合はGBR併用を前提とする。短めで太いインプラントが有利。"; break;
+                case 'D5': diagnosis.drilling = "【D5: 非常に軟らかい骨】最小限のドリル（パイロット、ファーストのみ）で対応。初期固定が得られない場合はGBR併用を前提とする。長めで太いインプラントが有利。"; break;
             }
 
             displayDiagnosis(diagnosis);
@@ -486,32 +485,32 @@
         function playVideo(src) {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
-            const backButton = document.getElementById('back-button');
+            const closeButton = document.getElementById('close-button');
             video.querySelector('source').src = src;
             video.load();
             document.getElementById('step2').classList.add('hidden');
             overlay.classList.remove('hidden');
-            backButton.classList.add('hidden');
+            closeButton.classList.add('hidden');
             video.play();
         }
 
         function closeVideo() {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
-            const backButton = document.getElementById('back-button');
+            const closeButton = document.getElementById('close-button');
             video.pause();
             video.currentTime = 0;
             overlay.classList.add('hidden');
-            backButton.classList.add('hidden');
+            closeButton.classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('overlay-video');
-            const backButton = document.getElementById('back-button');
-            if (video && backButton) {
-                video.addEventListener('play', () => backButton.classList.add('hidden'));
-                video.addEventListener('pause', () => backButton.classList.remove('hidden'));
+            const closeButton = document.getElementById('close-button');
+            if (video && closeButton) {
+                video.addEventListener('play', () => closeButton.classList.add('hidden'));
+                video.addEventListener('pause', () => closeButton.classList.remove('hidden'));
             }
         });
     </script>
