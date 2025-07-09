@@ -74,11 +74,13 @@
         .video-overlay video {
             max-height: 80vh;
         }
-        #close-button {
+        #back-button {
             position: absolute;
             top: 10px;
-            left: 10px;
-            font-size: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            padding: 0.25rem 0.75rem;
         }
         header {
             position: relative;
@@ -218,7 +220,7 @@
 
             <!-- Video Overlay -->
             <div id="video-overlay" class="video-overlay hidden">
-                <button id="close-button" onclick="closeVideo()" class="text-white hidden">✖︎</button>
+                <button id="back-button" onclick="closeVideo()" class="text-white hidden">戻る</button>
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
             </div>
 
@@ -356,18 +358,22 @@
 
                 switch (recommendedDiameterClass) {
                     case 'wide':
-                        recommendationText = `BLT RC ø4.8 × ${chosenStraumannLength}mm`;
-                        if (isMolarOrPremolar) {
-                            recommendationText += ` または RN ø4.8 × ${chosenStraumannLength}mm または WN ø4.8 × ${chosenStraumannLength}mm`;
+                        if (chosenStraumannLength !== 6) {
+                            recommendationText = `BLT RC ø4.8 × ${chosenStraumannLength}mm`;
+                            if (isMolarOrPremolar) {
+                                recommendationText += ` または RN ø4.8 × ${chosenStraumannLength}mm または WN ø4.8 × ${chosenStraumannLength}mm`;
+                            }
+                            diagnosis.straumann.recommendation.push(recommendationText);
                         }
-                        diagnosis.straumann.recommendation.push(recommendationText);
                         break;
                     case 'regular':
-                        recommendationText = `BLT RC ø4.1 × ${chosenStraumannLength}mm`;
-                        if (isMolarOrPremolar) {
-                            recommendationText += ` または RN ø4.1 × ${chosenStraumannLength}mm`;
+                        if (chosenStraumannLength !== 6) {
+                            recommendationText = `BLT RC ø4.1 × ${chosenStraumannLength}mm`;
+                            if (isMolarOrPremolar) {
+                                recommendationText += ` または RN ø4.1 × ${chosenStraumannLength}mm`;
+                            }
+                            diagnosis.straumann.recommendation.push(recommendationText);
                         }
-                        diagnosis.straumann.recommendation.push(recommendationText);
                         break;
                     case 'narrow':
                         diagnosis.straumann.recommendation.push(`BLT NC ø3.3 × ${chosenStraumannLength}mm`);
@@ -485,32 +491,32 @@
         function playVideo(src) {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
-            const closeButton = document.getElementById('close-button');
+            const backButton = document.getElementById('back-button');
             video.querySelector('source').src = src;
             video.load();
             document.getElementById('step2').classList.add('hidden');
             overlay.classList.remove('hidden');
-            closeButton.classList.add('hidden');
+            backButton.classList.add('hidden');
             video.play();
         }
 
         function closeVideo() {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
-            const closeButton = document.getElementById('close-button');
+            const backButton = document.getElementById('back-button');
             video.pause();
             video.currentTime = 0;
             overlay.classList.add('hidden');
-            closeButton.classList.add('hidden');
+            backButton.classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('overlay-video');
-            const closeButton = document.getElementById('close-button');
-            if (video && closeButton) {
-                video.addEventListener('play', () => closeButton.classList.add('hidden'));
-                video.addEventListener('pause', () => closeButton.classList.remove('hidden'));
+            const backButton = document.getElementById('back-button');
+            if (video && backButton) {
+                video.addEventListener('play', () => backButton.classList.add('hidden'));
+                video.addEventListener('pause', () => backButton.classList.remove('hidden'));
             }
         });
     </script>
