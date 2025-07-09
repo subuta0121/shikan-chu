@@ -58,6 +58,22 @@
             position: relative;
             z-index: 10;
         }
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .video-overlay video {
+            max-height: 80vh;
+        }
         header {
             position: relative;
             z-index: 1;
@@ -102,6 +118,7 @@
                 </div>
             </div>
 
+
             <!-- Step 2 -->
             <div id="step2" class="video-bg-container hidden">
                  <video autoplay loop muted playsinline class="video-bg">
@@ -127,7 +144,10 @@
                             </select>
                         </div>
                         <div>
-                            <label for="vertical_bone" class="block text-sm font-medium">3. 垂直的骨量 (mm)</label>
+                            <button type="button" onclick="playVideo('assets/video/vertical_height.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
+                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                <span class="button-text">3. 垂直的骨量 (mm)</span>
+                            </button>
                             <select id="vertical_bone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                 <option value="<4">&lt; 4 mm</option>
                                 <option value="4-6">4 - 6 mm</option>
@@ -137,7 +157,10 @@
                             </select>
                         </div>
                         <div>
-                            <label for="mesiodistal_width" class="block text-sm font-medium">4. 近遠心的骨幅 (mm)</label>
+                            <button type="button" onclick="playVideo('assets/video/mesiodistal_width.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
+                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                <span class="button-text">4. 近遠心的骨幅 (mm)</span>
+                            </button>
                             <select id="mesiodistal_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                 <option value="<6.3">&lt; 6.3 mm</option>
                                 <option value="6.3-7.0">6.3 - 7.0 mm</option>
@@ -146,7 +169,10 @@
                             </select>
                         </div>
                         <div>
-                            <label for="buccolingual_width" class="block text-sm font-medium">5. 頬舌的骨幅 (mm)</label>
+                            <button type="button" onclick="playVideo('assets/video/buccolingual_width.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
+                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                <span class="button-text">5. 頬舌的骨幅 (mm)</span>
+                            </button>
                             <select id="buccolingual_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                  <option value="<5.3">&lt; 5.3 mm</option>
                                  <option value="5.3-6.0">5.3 - 6.0 mm</option>
@@ -170,6 +196,15 @@
                         <span class="button-text">診断・治療計画を立案</span>
                      </button>
                 </div>
+            </div>
+
+            <!-- Video Overlay -->
+            <div id="video-overlay" class="video-overlay hidden">
+                <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
+                <button onclick="closeVideo()" class="relative bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 overflow-hidden transition duration-300">
+                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                    <span class="button-text">戻る</span>
+                </button>
             </div>
 
             <!-- Step 3 -->
@@ -430,6 +465,25 @@
             document.getElementById('step1').classList.remove('hidden');
             document.querySelectorAll('input[name="contra"]').forEach(cb => cb.checked = false);
             document.getElementById('step2').querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+        }
+
+        function playVideo(src) {
+            const overlay = document.getElementById('video-overlay');
+            const video = document.getElementById('overlay-video');
+            video.querySelector('source').src = src;
+            video.load();
+            document.getElementById('step2').classList.add('hidden');
+            overlay.classList.remove('hidden');
+            video.play();
+        }
+
+        function closeVideo() {
+            const overlay = document.getElementById('video-overlay');
+            const video = document.getElementById('overlay-video');
+            video.pause();
+            video.currentTime = 0;
+            overlay.classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
         }
     </script>
 </body>
