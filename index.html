@@ -76,7 +76,7 @@
         }
         .video-overlay button {
             position: absolute;
-            bottom: 1rem;
+            bottom: 50px;
         }
         header {
             position: relative;
@@ -217,7 +217,7 @@
             <!-- Video Overlay -->
             <div id="video-overlay" class="video-overlay hidden">
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
-                <button onclick="closeVideo()" class="relative bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 overflow-hidden transition duration-300">
+                <button id="back-button" onclick="closeVideo()" class="relative bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 overflow-hidden transition duration-300 hidden">
                     <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
                     <span class="button-text">戻る</span>
                 </button>
@@ -486,21 +486,34 @@
         function playVideo(src) {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
+            const backButton = document.getElementById('back-button');
             video.querySelector('source').src = src;
             video.load();
             document.getElementById('step2').classList.add('hidden');
             overlay.classList.remove('hidden');
+            backButton.classList.add('hidden');
             video.play();
         }
 
         function closeVideo() {
             const overlay = document.getElementById('video-overlay');
             const video = document.getElementById('overlay-video');
+            const backButton = document.getElementById('back-button');
             video.pause();
             video.currentTime = 0;
             overlay.classList.add('hidden');
+            backButton.classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('overlay-video');
+            const backButton = document.getElementById('back-button');
+            if (video && backButton) {
+                video.addEventListener('play', () => backButton.classList.add('hidden'));
+                video.addEventListener('pause', () => backButton.classList.remove('hidden'));
+            }
+        });
     </script>
 </body>
 </html>
