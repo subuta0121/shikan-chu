@@ -74,6 +74,10 @@
         .video-overlay video {
             max-height: 80vh;
         }
+        .video-overlay button {
+            position: absolute;
+            bottom: 1rem;
+        }
         header {
             position: relative;
             z-index: 1;
@@ -144,10 +148,14 @@
                             </select>
                         </div>
                         <div>
-                            <button type="button" onclick="playVideo('assets/video/vertical_height.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
-                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
-                                <span class="button-text">3. 垂直的骨量 (mm)</span>
-                            </button>
+                            <div class="flex items-center mb-2">
+                                <span class="mr-1">3.</span>
+                                <button type="button" onclick="playVideo('assets/video/vertical_height.mp4')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                    <span class="button-text">垂直的骨量</span>
+                                </button>
+                                <span class="ml-1">(mm)</span>
+                            </div>
                             <select id="vertical_bone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                 <option value="<4">&lt; 4 mm</option>
                                 <option value="4-6">4 - 6 mm</option>
@@ -157,10 +165,14 @@
                             </select>
                         </div>
                         <div>
-                            <button type="button" onclick="playVideo('assets/video/mesiodistal_width.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
-                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
-                                <span class="button-text">4. 近遠心的骨幅 (mm)</span>
-                            </button>
+                            <div class="flex items-center mb-2">
+                                <span class="mr-1">4.</span>
+                                <button type="button" onclick="playVideo('assets/video/mesiodistal_width.mp4')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                    <span class="button-text">近遠心的骨幅</span>
+                                </button>
+                                <span class="ml-1">(mm)</span>
+                            </div>
                             <select id="mesiodistal_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                 <option value="<6.3">&lt; 6.3 mm</option>
                                 <option value="6.3-7.0">6.3 - 7.0 mm</option>
@@ -169,10 +181,14 @@
                             </select>
                         </div>
                         <div>
-                            <button type="button" onclick="playVideo('assets/video/buccolingual_width.mp4')" class="relative w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 mb-2">
-                                <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
-                                <span class="button-text">5. 頬舌的骨幅 (mm)</span>
-                            </button>
+                            <div class="flex items-center mb-2">
+                                <span class="mr-1">5.</span>
+                                <button type="button" onclick="playVideo('assets/video/buccolingual_width.mp4')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                    <span class="button-text">頬舌的骨幅</span>
+                                </button>
+                                <span class="ml-1">(mm)</span>
+                            </div>
                             <select id="buccolingual_width" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                  <option value="<5.3">&lt; 5.3 mm</option>
                                  <option value="5.3-6.0">5.3 - 6.0 mm</option>
