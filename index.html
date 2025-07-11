@@ -355,39 +355,52 @@
             }
 
             const recommendedDiameterClass = getDiameterClass(mesiodistalWidthValue, buccolingualNum);
-            
+
             const chosenStraumannLength = getBestFitLength(STRAUMANN_LENGTHS, targetLength);
             const chosenAqbLength = getBestFitLength(AQB_LENGTHS, targetLength);
 
+            const bltLabel = (jaw === 'maxilla' && location === 'anterior') ? 'BLT' : 'BL/BLT';
+
+            const allowRnSix = jaw === 'mandible' &&
+                               (location === 'premolar' || location === 'molar') &&
+                               verticalBoneValue === '7-9' &&
+                               (mesiodistalWidthValue === '7.1-7.9' || mesiodistalWidthValue === '>=8.0') &&
+                               (buccolingualWidthValue === '6.1-6.8' || buccolingualWidthValue === '>=6.8');
+
             if (chosenStraumannLength) {
                 let recommendationText = '';
-                const isMolarOrPremolar = (location === 'premolar' || location === 'molar');
+                const isMolarOrPremolar = (location === 'premolar' || location == 'molar');
 
-                switch (recommendedDiameterClass) {
-                    case 'wide':
-                        if (chosenStraumannLength !== 6) {
-                            recommendationText = `BLT RC ø4.8 × ${chosenStraumannLength}mm`;
+                if (chosenStraumannLength === 6) {
+                    if (allowRnSix) {
+                        const rnDiameter = (mesiodistalWidthValue === '>=8.0' && buccolingualWidthValue === '>=6.8') ? 'ø4.8' : 'ø4.1';
+                        diagnosis.straumann.recommendation.push(`RN ${rnDiameter} × 6mm`);
+                    }
+                } else {
+                    switch (recommendedDiameterClass) {
+                        case 'wide':
+                            recommendationText = `${bltLabel} RC ø4.8 × ${chosenStraumannLength}mm`;
                             if (isMolarOrPremolar) {
                                 recommendationText += ` または RN ø4.8 × ${chosenStraumannLength}mm または WN ø4.8 × ${chosenStraumannLength}mm`;
                             }
                             diagnosis.straumann.recommendation.push(recommendationText);
-                        }
-                        break;
-                    case 'regular':
-                        if (chosenStraumannLength !== 6) {
-                            recommendationText = `BLT RC ø4.1 × ${chosenStraumannLength}mm`;
+                            break;
+                        case 'regular':
+                            recommendationText = `${bltLabel} RC ø4.1 × ${chosenStraumannLength}mm`;
                             if (isMolarOrPremolar) {
                                 recommendationText += ` または RN ø4.1 × ${chosenStraumannLength}mm`;
                             }
                             diagnosis.straumann.recommendation.push(recommendationText);
-                        }
-                        break;
-                    case 'narrow':
-                        diagnosis.straumann.recommendation.push(`BLT NC ø3.3 × ${chosenStraumannLength}mm`);
-                        break;
-                    default:
-                        diagnosis.straumann.notes.push("骨幅に適したストローマンインプラントの選択が困難です。GBRを必須とします。");
-                        break;
+                            break;
+                        case 'narrow':
+                            if (location !== 'molar') {
+                                diagnosis.straumann.recommendation.push(`${bltLabel} NC ø3.3 × ${chosenStraumannLength}mm`);
+                            }
+                            break;
+                        default:
+                            diagnosis.straumann.notes.push("骨幅に適したストローマンインプラントの選択が困難です。GBRを必須とします。");
+                            break;
+                    }
                 }
             } else {
                  if (diagnosis.dangers.length === 0) {
@@ -413,10 +426,12 @@
                 }
 
                 if (aqbDiameterCode) {
-                    const lengthCode = AQB_LENGTH_CODES[chosenAqbLength];
-                    let examplePartNumber = `${aqbDiameterCode}${lengthCode}S`;
-                    diagnosis.aqb.recommendation.push(`径: ${aqbDiameterCode} (ø${aqbDiameterValue}mm), 被覆部長: ${chosenAqbLength}mm (例: ${examplePartNumber})`);
-                    diagnosis.aqb.notes.push(`支台部の高さは、軟組織の厚みや対合関係を考慮し選択してください。`);
+                    if (!(aqbDiameterCode === 'T3' && chosenAqbLength === 6)) {
+                        const lengthCode = AQB_LENGTH_CODES[chosenAqbLength];
+                        let examplePartNumber = `${aqbDiameterCode}${lengthCode}S`;
+                        diagnosis.aqb.recommendation.push(`径: ${aqbDiameterCode} (ø${aqbDiameterValue}mm), 被覆部長: ${chosenAqbLength}mm (例: ${examplePartNumber})`);
+                        diagnosis.aqb.notes.push(`支台部の高さは、軟組織の厚みや対合関係を考慮し選択してください。`);
+                    }
                 } else {
                     if (recommendedDiameterClass !== 'none') {
                        diagnosis.aqb.notes.push("骨幅に適したAQBインプラントの選択が困難です。GBRを必須とします。");
