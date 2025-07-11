@@ -76,11 +76,9 @@
         }
         #back-button {
             position: absolute;
-            top: 10px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
-            padding: 0.25rem 0.75rem;
         }
         header {
             position: relative;
@@ -220,7 +218,10 @@
 
             <!-- Video Overlay -->
             <div id="video-overlay" class="video-overlay hidden">
-                <button id="back-button" onclick="closeVideo()" class="text-white hidden">戻る</button>
+                <button id="back-button" onclick="closeVideo()" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300 hidden">
+                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                    <span class="button-text">戻る</span>
+                </button>
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
             </div>
 
