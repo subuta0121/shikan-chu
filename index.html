@@ -199,7 +199,14 @@
                             </select>
                         </div>
                         <div>
-                            <label for="bone_quality" class="block text-sm font-medium">6. 骨質分類</label>
+                            <div class="flex items-center mb-2">
+                                <span class="mr-1">6.</span>
+                                <button type="button" onclick="playVideo('./bone_quality.mp4')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                                    <span class="button-text">骨質分類</span>
+                                </button>
+                                <span class="ml-1">(Mischの分類)</span>
+                            </div>
                             <select id="bone_quality" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-500 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm rounded-md bg-gray-700 text-white">
                                 <option value="D1">D1 (緻密な皮質骨)</option>
                                 <option value="D2">D2 (厚い皮質骨と緻密な海綿骨)</option>
@@ -495,7 +502,7 @@
             video.load();
             document.getElementById('step2').classList.add('hidden');
             overlay.classList.remove('hidden');
-            backButton.classList.add('hidden');
+            backButton.classList.remove('hidden');
             video.play();
         }
 
@@ -514,8 +521,7 @@
             const video = document.getElementById('overlay-video');
             const backButton = document.getElementById('back-button');
             if (video && backButton) {
-                video.addEventListener('play', () => backButton.classList.add('hidden'));
-                video.addEventListener('pause', () => backButton.classList.remove('hidden'));
+                backButton.classList.add('hidden');
             }
         });
     </script>
