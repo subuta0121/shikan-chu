@@ -74,7 +74,30 @@
         .video-overlay video {
             max-height: 80vh;
         }
+        .lineup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .lineup-overlay img {
+            max-height: 80vh;
+            max-width: 90vw;
+        }
         #back-button {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #lineup-back-button {
             position: absolute;
             top: 80px;
             left: 50%;
@@ -229,6 +252,15 @@
                     <span class="button-text">戻る</span>
                 </button>
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
+            </div>
+
+            <!-- Lineup Overlay -->
+            <div id="lineup-overlay" class="lineup-overlay hidden">
+                <button id="lineup-back-button" onclick="closeLineup()" class="relative bg-blue-600 text-white font-bold text-lg py-2 px-6 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                    <span class="button-text">戻る</span>
+                </button>
+                <img id="lineup-image" src="" alt="Lineup" class="mb-4" />
             </div>
 
             <!-- Step 3 -->
@@ -487,8 +519,8 @@
             if (diagnosis.notes) {
                 implantHTML += `<p class="text-sm text-gray-300">${diagnosis.notes}</p>`;
             }
-            implantHTML += `<div class="mt-2"><p class="font-semibold text-gray-300">ストローマン:</p><p class="ml-4 text-gray-200">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div>`;
-            implantHTML += `<div class="mt-4"><p class="font-semibold text-gray-300">AQB:</p><p class="ml-4 text-gray-200">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div>`;
+            implantHTML += `<div class="mt-2"><div class="flex items-start"><button type="button" onclick="showLineup('straumann')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300"><video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video><span class="button-text">ストローマン</span></button><div class="ml-4 flex-1"><p class="text-gray-200">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="text-sm text-gray-400">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div></div></div>`;
+            implantHTML += `<div class="mt-4"><div class="flex items-start"><button type="button" onclick="showLineup('aqb')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300"><video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video><span class="button-text">AQB</span></button><div class="ml-4 flex-1"><p class="text-gray-200">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="text-sm text-gray-400">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div></div></div>`;
             implantDiv.innerHTML = implantHTML;
             resultContainer.appendChild(implantDiv);
 
@@ -521,16 +553,30 @@
             video.play();
         }
 
-        function closeVideo() {
-            const overlay = document.getElementById('video-overlay');
-            const video = document.getElementById('overlay-video');
-            const backButton = document.getElementById('back-button');
-            video.pause();
-            video.currentTime = 0;
-            overlay.classList.add('hidden');
-            backButton.classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
+function closeVideo() {
+    const overlay = document.getElementById('video-overlay');
+    const video = document.getElementById('overlay-video');
+    const backButton = document.getElementById('back-button');
+    video.pause();
+    video.currentTime = 0;
+    overlay.classList.add('hidden');
+    backButton.classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+}
+
+function showLineup(type) {
+    const overlay = document.getElementById('lineup-overlay');
+    const img = document.getElementById('lineup-image');
+    img.src = type === 'straumann' ? 'images/straumann_lineup.jpg' : 'images/aqb_lineup.jpg';
+    document.getElementById('step3').classList.add('hidden');
+    overlay.classList.remove('hidden');
+}
+
+function closeLineup() {
+    const overlay = document.getElementById('lineup-overlay');
+    overlay.classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('overlay-video');
