@@ -270,6 +270,7 @@
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">診断結果<br>治療計画サマリー</h2>
+                    <div id="caution-message" class="hidden p-4 mb-4 rounded-md border-2 border-red-500 text-red-200 bg-red-900 bg-opacity-80"></div>
                     <div id="diagnosis-result" class="space-y-4"></div>
                     <button onclick="restartGame()" class="relative mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 overflow-hidden transition duration-300">
                         <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
@@ -482,7 +483,21 @@
                 case 'D4': diagnosis.drilling = "【D4: 軟らかい骨】最小限のドリリング（セカンドドリル以内）に留める。初期固定が得にくい。最終ドリル径をインプラントより1.0mm程度小さくし、圧入効果を最大化する。初期固定が得られない場合はGBR併用を前提とする。封鎖スクリュー推奨。長めで太いインプラントが有利。"; break;
             }
 
+            toggleCautionMessage(jaw, location);
+
             displayDiagnosis(diagnosis);
+        }
+
+        function toggleCautionMessage(jaw, location) {
+            const cautionDiv = document.getElementById('caution-message');
+            const message = '⚠️ ※インプラントによる重篤出血症例の多くが下顎犬歯部である。特に無歯顎では前歯部は舌下動脈、オトガイ下動脈、正中舌側孔（CTで読影可）への物理的距離が短くなる。インプラント長は長すぎず、舌側歯肉剥離は最小限に。';
+            if (jaw === 'mandible' && location === 'anterior') {
+                cautionDiv.textContent = message;
+                cautionDiv.classList.remove('hidden');
+            } else {
+                cautionDiv.classList.add('hidden');
+                cautionDiv.textContent = '';
+            }
         }
 
         function displayDiagnosis(diagnosis) {
