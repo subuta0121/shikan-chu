@@ -380,11 +380,13 @@
                  diagnosis.procedures.push('頬舌的骨幅が著しく不足しています。GBR（骨造成）の併用が必須です。');
             }
 
-            if (buccolingualWidthValue === '<5.3' &&
+            if (jaw === 'maxilla' &&
+                location === 'anterior' &&
                 verticalBoneValue === '>=12' &&
-                mesiodistalWidthValue === '>=8.0' &&
-                (boneQuality === 'D3' || boneQuality === 'D4')) {
-                diagnosis.procedures.push('スプリットクレスト法を院長or柴田と相談');
+                mesiodistalWidthValue !== '<6.3' &&
+                buccolingualWidthValue === '<5.3' &&
+                (boneQuality === 'D2' || boneQuality === 'D3' || boneQuality === 'D4')) {
+                diagnosis.procedures.push('スプリットクレスト法を相談');
             }
 
             const recommendedDiameterClass = getDiameterClass(mesiodistalWidthValue, buccolingualNum);
