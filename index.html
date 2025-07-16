@@ -74,7 +74,30 @@
         .video-overlay video {
             max-height: 80vh;
         }
+        .lineup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .lineup-overlay img {
+            max-height: 80vh;
+            max-width: 90vw;
+        }
         #back-button {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #lineup-back-button {
             position: absolute;
             top: 80px;
             left: 50%;
@@ -108,14 +131,14 @@
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">Step 1: 全身状態の確認（問診）</h2>
-                    <p class="mb-4 text-gray-200">まず、インプラント治療の絶対的禁忌症に該当しないか確認します。</p>
+                    <p class="mb-4 text-gray-200">まず、インプラント治療の絶対的禁忌に該当しないか確認します。</p>
                     <div class="space-y-2">
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="未コントロールな糖尿病（HbA1c 8.0%以上）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">未コントロールな糖尿病（HbA1c 8.0%以上）</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="顎骨への放射線治療歴（累積照射量50Gy以上）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">顎骨への放射線治療歴（累積照射量50Gy以上）</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="癌骨転移用BP製剤またはデノスマブ製剤使用中" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">癌骨転移用BP製剤またはデノスマブ製剤使用中</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="高度な免疫抑制状態・自己免疫疾患" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">高度な免疫抑制状態・自己免疫疾患</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="成長期の小児" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">成長期の小児</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="contra" value="妊娠中の患者" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">妊娠中の患者</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="血糖コントロール不良の糖尿病（例：HbA1c ≧ 8.0%）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">血糖コントロール不良の糖尿病（例：HbA1c ≧ 8.0%）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="頭頸部領域への放射線治療歴（累積線量≧50Gy）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">頭頸部領域への放射線治療歴（累積線量≧50Gy）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="骨転移に対する高用量BP製剤・デノスマブ使用中" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">骨転移に対する高用量BP製剤・デノスマブ使用中</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="重度免疫抑制状態（移植後、HIV、自己免疫疾患等）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">重度免疫抑制状態（移植後、HIV、自己免疫疾患等）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="骨成長期（骨成熟前）の患者（小児・思春期）" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">骨成長期（骨成熟前）の患者（小児・思春期）</span></label>
+                        <label class="flex items-center"><input type="checkbox" name="contra" value="妊娠中の女性" class="h-4 w-4 rounded border-gray-500 text-blue-500 focus:ring-blue-400 bg-gray-700"><span class="ml-2">妊娠中の女性</span></label>
                     </div>
                     <button onclick="checkContraindications()" class="relative mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
                         <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
@@ -231,6 +254,15 @@
                 <video id="overlay-video" controls class="mb-4"><source src="" type="video/mp4"></video>
             </div>
 
+            <!-- Lineup Overlay -->
+            <div id="lineup-overlay" class="lineup-overlay hidden">
+                <button id="lineup-back-button" onclick="closeLineup()" class="relative bg-blue-600 text-white font-bold text-lg py-2 px-6 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300">
+                    <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
+                    <span class="button-text">戻る</span>
+                </button>
+                <img id="lineup-image" src="" alt="Lineup" class="mb-4" />
+            </div>
+
             <!-- Step 3 -->
             <div id="step3" class="video-bg-container hidden">
                 <video autoplay loop muted playsinline class="video-bg">
@@ -238,6 +270,7 @@
                 </video>
                 <div class="content-overlay text-white">
                     <h2 class="text-2xl font-bold mb-4 step-title !border-blue-400">診断結果<br>治療計画サマリー</h2>
+                    <div id="caution-message" class="hidden p-4 mb-4 rounded-md border-2 border-red-500 text-red-200 bg-red-900 bg-opacity-80"></div>
                     <div id="diagnosis-result" class="space-y-4"></div>
                     <button onclick="restartGame()" class="relative mt-8 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 overflow-hidden transition duration-300">
                         <video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video>
@@ -450,7 +483,21 @@
                 case 'D4': diagnosis.drilling = "【D4: 軟らかい骨】最小限のドリリング（セカンドドリル以内）に留める。初期固定が得にくい。最終ドリル径をインプラントより1.0mm程度小さくし、圧入効果を最大化する。初期固定が得られない場合はGBR併用を前提とする。封鎖スクリュー推奨。長めで太いインプラントが有利。"; break;
             }
 
+            toggleCautionMessage(jaw, location);
+
             displayDiagnosis(diagnosis);
+        }
+
+        function toggleCautionMessage(jaw, location) {
+            const cautionDiv = document.getElementById('caution-message');
+            const message = '⚠️ ※インプラントによる重篤出血症例の多くが下顎犬歯部である。特に無歯顎では前歯部は舌下動脈、オトガイ下動脈、正中舌側孔（CTで読影可）への物理的距離が短くなる。インプラント長は長すぎず、舌側歯肉剥離は最小限に。';
+            if (jaw === 'mandible' && location === 'anterior') {
+                cautionDiv.textContent = message;
+                cautionDiv.classList.remove('hidden');
+            } else {
+                cautionDiv.classList.add('hidden');
+                cautionDiv.textContent = '';
+            }
         }
 
         function displayDiagnosis(diagnosis) {
@@ -487,8 +534,8 @@
             if (diagnosis.notes) {
                 implantHTML += `<p class="text-sm text-gray-300">${diagnosis.notes}</p>`;
             }
-            implantHTML += `<div class="mt-2"><p class="font-semibold text-gray-300">ストローマン:</p><p class="ml-4 text-gray-200">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div>`;
-            implantHTML += `<div class="mt-4"><p class="font-semibold text-gray-300">AQB:</p><p class="ml-4 text-gray-200">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="ml-4 text-sm text-gray-400">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div>`;
+            implantHTML += `<div class="mt-2 text-center"><button type="button" onclick="showLineup('straumann')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300"><video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video><span class="button-text">ストローマン</span></button><p class="mt-2 text-gray-200">${diagnosis.straumann.recommendation.length > 0 ? diagnosis.straumann.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.straumann.notes.length > 0 ? `<p class="text-sm text-gray-400">└ ${diagnosis.straumann.notes.join('<br>└ ')}</p>` : ''}</div>`;
+            implantHTML += `<div class="mt-4 text-center"><button type="button" onclick="showLineup('aqb')" class="relative bg-blue-600 text-white font-bold py-1 px-4 rounded-lg hover:bg-blue-700 overflow-hidden transition duration-300"><video autoplay loop muted playsinline class="button-video-bg hover:opacity-70"><source src="./background_button.mp4" type="video/mp4"></video><span class="button-text">AQB</span></button><p class="mt-2 text-gray-200">${diagnosis.aqb.recommendation.length > 0 ? diagnosis.aqb.recommendation.join(', ') : '推奨なし'}</p>${diagnosis.aqb.notes.length > 0 ? `<p class="text-sm text-gray-400">└ ${diagnosis.aqb.notes.join('<br>└ ')}</p>` : ''}</div>`;
             implantDiv.innerHTML = implantHTML;
             resultContainer.appendChild(implantDiv);
 
@@ -521,16 +568,30 @@
             video.play();
         }
 
-        function closeVideo() {
-            const overlay = document.getElementById('video-overlay');
-            const video = document.getElementById('overlay-video');
-            const backButton = document.getElementById('back-button');
-            video.pause();
-            video.currentTime = 0;
-            overlay.classList.add('hidden');
-            backButton.classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
+function closeVideo() {
+    const overlay = document.getElementById('video-overlay');
+    const video = document.getElementById('overlay-video');
+    const backButton = document.getElementById('back-button');
+    video.pause();
+    video.currentTime = 0;
+    overlay.classList.add('hidden');
+    backButton.classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+}
+
+function showLineup(type) {
+    const overlay = document.getElementById('lineup-overlay');
+    const img = document.getElementById('lineup-image');
+    img.src = type === 'straumann' ? 'images/straumann_lineup.jpg' : 'images/aqb_lineup.jpg';
+    document.getElementById('step3').classList.add('hidden');
+    overlay.classList.remove('hidden');
+}
+
+function closeLineup() {
+    const overlay = document.getElementById('lineup-overlay');
+    overlay.classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('overlay-video');
