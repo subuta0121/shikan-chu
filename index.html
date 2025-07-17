@@ -485,6 +485,11 @@
                 case 'D4': diagnosis.drilling = "【D4: 軟らかい骨】最小限のドリリング（セカンドドリル以内）に留める。初期固定が得にくい。最終ドリル径をインプラントより1.0mm程度小さくし、圧入効果を最大化する。初期固定が得られない場合はGBR併用を前提とする。封鎖スクリュー推奨。長めで太いインプラントが有利。"; break;
             }
 
+            if (jaw === 'mandible' && location === 'anterior' && ['<4', '4-6', '7-9'].includes(verticalBoneValue)) {
+                diagnosis.straumann.recommendation = [];
+                diagnosis.aqb.recommendation = [];
+            }
+
             toggleCautionMessage(jaw, location);
 
             displayDiagnosis(diagnosis);
@@ -492,7 +497,7 @@
 
         function toggleCautionMessage(jaw, location) {
             const cautionDiv = document.getElementById('caution-message');
-            const message = '⚠️ ※インプラントによる重篤出血症例の多くが下顎犬歯部である。特に無歯顎では前歯部は舌下動脈、オトガイ下動脈、正中舌側孔（CTで読影可）への物理的距離が短くなる。インプラント長は長すぎず、舌側歯肉剥離は最小限に。';
+            const message = '⚠️ インプラントによる重篤出血症例のほぼ全てが下顎犬歯部付近である。特に無歯顎では前歯部は舌下動脈、オトガイ下動脈、正中舌側孔への物理的距離が短くなる。インプラント長は長すぎず、舌側歯肉剥離は最小限に。';
             if (jaw === 'mandible' && location === 'anterior') {
                 cautionDiv.textContent = message;
                 cautionDiv.classList.remove('hidden');
